@@ -25,7 +25,7 @@ public class VotersController {
     private ElectionService electionService;
 
     //welcome page
-    @GetMapping("/")//done
+    @GetMapping(value = {"/welcome","/"})//done
     public String welcome() {
         System.out.println("inside welcome method");
         return "welcome";
@@ -59,9 +59,14 @@ public class VotersController {
         voterDTO1.setVoterName(voterDTO.getVoterName());
         voterDTO1.setAadhaarNo(null);
 
-        votersService.saveVoterData(voterDTO1);
+        VoterDTO byName = votersService.findByName(voterDTO.getVoterName());
+        System.out.println("byName " + byName);
+        if (byName == null) {
+            votersService.saveVoterData(voterDTO1);
 
-        return "redirect:/candidates-details";
+            return "redirect:/candidates-details";
+        }
+        return "feedback-page";
     }
 
 //    candidates-details

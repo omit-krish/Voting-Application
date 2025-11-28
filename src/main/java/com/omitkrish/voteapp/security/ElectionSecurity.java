@@ -20,7 +20,8 @@ public class ElectionSecurity {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/find-result").hasRole("ADMIN") // only admin
+                        .requestMatchers("/find-result").hasRole("ADMIN")
+                        .requestMatchers("/welcome","/").hasAnyRole("ADMIN","USER")
                         .anyRequest().permitAll() // everything else public
                 )
                 .formLogin(Customizer.withDefaults()) // default login page

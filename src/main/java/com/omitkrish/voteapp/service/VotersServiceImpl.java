@@ -25,8 +25,15 @@ public class VotersServiceImpl implements  VotersService{
     @Override
     public VoterDTO findByName(String voterName) {
         VotersEntity votersEntity =  votersRepo.findByName(voterName);
-        VoterDTO voterDTO = modelMapper.map(votersEntity, VoterDTO.class);
 
-        return voterDTO;
+        if(votersEntity==null){
+            return null;
+        }
+        else {
+            VoterDTO voterDTO = modelMapper.map(votersEntity, VoterDTO.class);
+            return voterDTO;
+        }
+
+
     }
 }

@@ -8,6 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class VotersRepoImpl  implements  VotersRepo {
 
@@ -37,9 +39,14 @@ public class VotersRepoImpl  implements  VotersRepo {
 
         Session session = sessionFactory.openSession();
         session.getTransaction().begin();
-        VotersEntity votersEntity = session.createQuery("from VotersEntity where voterName=:VOTERNAME",VotersEntity.class)
-                .setParameter("VOTERNAME",voterName)
-                .getSingleResult();
+        List<VotersEntity> voters = session.createQuery(
+                        "from VotersEntity where voterName=:VOTERNAME", VotersEntity.class)
+                .setParameter("VOTERNAME", voterName)
+                .getResultList();
+
+        System.out.println("find thee error  "+voters==null);
+
+        VotersEntity votersEntity = voters.isEmpty() ? null : voters.get(0);
         session.getTransaction().commit();
         session.close();
 
