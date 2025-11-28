@@ -24,12 +24,8 @@ public class ElectionSecurity {
                         .anyRequest().permitAll() // everything else public
                 )
                 .formLogin(Customizer.withDefaults()) // default login page
-                .logout(logout -> logout
-                        .logoutUrl("/logout") // logout URL
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")) // allow GET
-                        .logoutSuccessUrl("/login?logout") // redirect after logout
-                        .permitAll()
-                );
+                .logout(Customizer.withDefaults()); // default logout page
+
 
         return http.build();
     }
